@@ -3,13 +3,12 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 const UpdateInfo = (props) => {
-  //console.log(props.location.state);
 
   const [data, setData] = useState({
+    id: props.location.state.user.id,
     name: props.location.state.user.name,
     email: props.location.state.user.email,
     mobile: props.location.state.user.mobile,
-    id: props.location.state.user._id,
   });
 
   let name, value;
@@ -24,7 +23,7 @@ const UpdateInfo = (props) => {
 
   const updateData = async (e) => {
     e.preventDefault();
-    const { name, email, mobile, id } = data;
+    const { name, email, mobile, id} = data;
 
     if (!name || !email || !mobile) {
       window.alert("please Filled all data!");
