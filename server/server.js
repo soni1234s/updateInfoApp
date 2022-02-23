@@ -24,8 +24,9 @@ mongoose
   });
 
 const userSchema = new mongoose.Schema({
-  _id: {
-    type: ObjectId,
+  id: {
+    type: String,
+    required: true,
   },
   name: {
     type: String,
@@ -53,14 +54,14 @@ const userData = async (req, res) => {
   //console.log(req.body);
 
   try {
-    const { name, email, mobile } = req.body;
+    const { id, name, email, mobile } = req.body;
 
     if (!name || !email || !mobile) {
       console.log("All Fields are required!");
       return;
     }
 
-    const user = User({ name, email, mobile });
+    const user = User({ id, name, email, mobile });
 
     await user.save();
     return res.json({ message: "MISSION SUCCESSFULL" });
@@ -82,8 +83,8 @@ const getData = (req, res) => {
 
 const updateData = (req, res) => {
   console.log(req.params.id);
-  User.findByIdAndUpdate(
-    { _id: req.params.id },
+  User.findOneAndUpdate(
+    { id: req.params.id },
     {
       $set: {
         name: req.body.name,
